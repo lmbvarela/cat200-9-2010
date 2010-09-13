@@ -1,3 +1,4 @@
+#labels Featured
 This page gives a general view of our project.
 
 = Introduction =
