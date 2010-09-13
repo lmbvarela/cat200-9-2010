@@ -8,6 +8,7 @@ With Advanced Visual Instrument, one can save all the troubles to buy and keep t
 
 The idea of this project comes from a Korean variety show. A group of musicians has composed a song using an artist’s voice that their piano has recorded on the spot. This has inspired us and we have decided to come out with this project to share the joy of music.
 
+-------
 
 = Team Members =
 Khoo Ka Thoong
@@ -17,6 +18,8 @@ Wong Seok Yee
 Lim Yeong Chuin
 
 Choo Seah Ling
+
+--------
 
 = Usage Scenarios =
 1.	Joe is a pianist. He got an idea of a new song and wishes to compose it on the spot but he doesn't have a piano with him. He had his laptop with him and using Advanced Visual Instrument, he started to compose his song using the mock-up piano in the program.
@@ -29,28 +32,31 @@ Choo Seah Ling
 
 5.	Mary composed a new sound file with the drum. She wishes to mix the drum file and the guitar file she had made the other day together. The guitar file was saved as audio file.
 
+-------
 
 = Use Case Diagram =
 Project overview.
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/lY5rIf6MNv0z4Fm41QBdT8_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh6.ggpht.com/_BT5G2024qqo/TI3F8DV0weI/AAAAAAAAABA/R1w2Qggg1pI/s144/use%20case.jpeg" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
+-------
 
 = Sequence Diagram =
-*Use Case 1*
+== Use Case 1 ==
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/SK6q04bacprweNto-75AWM_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh4.ggpht.com/_BT5G2024qqo/TI3F8NPewuI/AAAAAAAAABE/V7LnPU9rF0k/s144/1.jpeg" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
-*Use Case 2*
+== Use Case 2 ==
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/MAtfJREQT1MEw0xDhwAG0c_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh4.ggpht.com/_BT5G2024qqo/TI3F8FvemyI/AAAAAAAAABI/TBL-oX7ei7c/s144/2.jpeg" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
-*Use Case 3*
+== Use Case 3 ==
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/-LQj7QFzi8bDVQ8Fdvf8Xs_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh5.ggpht.com/_BT5G2024qqo/TI3F8cWGVUI/AAAAAAAAABM/kV0eTRIFWeM/s144/3.jpeg" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
-*Use Case 4*
+== Use Case 4 ==
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/GbSCBFtD4mHgfIlp5nSm08_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh6.ggpht.com/_BT5G2024qqo/TI3F8VLjyXI/AAAAAAAAABQ/Fc9Oo0wFtLw/s144/4.jpeg" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
-*Use Case 5*
+== Use Case 5 ==
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/z9MImiKfn0_WeCXZq4GNZc_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh5.ggpht.com/_BT5G2024qqo/TI3GE6xI_3I/AAAAAAAAABY/xp-MjH5fjQI/s144/5.jpeg" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
+-------
 = Proposed User Interfaces =
 *Sketches*
 
@@ -59,3 +65,4 @@ Project overview.
 
 *Ver. 2* - Done on 12th August 2010
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/FS5ezwCNwDyS1xDXEl-CCs_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh5.ggpht.com/_BT5G2024qqo/TI3GE5_stoI/AAAAAAAAABg/2I3KXKSlcpc/s144/GUI%20ver%202.jpeg" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
+---------
