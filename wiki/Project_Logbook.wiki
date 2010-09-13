@@ -126,4 +126,4 @@ Attendance	: All members
 Agendas	:
  * All members checked through other’s code and upload their own code to Google Code accordingly.
  * Modifications have been done to the initial UML Diagram. (Please refer to Documentation page for final version of the diagrams.)
- * Wong unable to upload the code due to connection problem between Eclipse and Google Code. [Issue solved on 3rd September 2010]
+ * Wong unable to upload the code due to connection problem between Eclipse and Google Code. (Issue solved on 3rd September 2010)
