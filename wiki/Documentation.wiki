@@ -73,30 +73,33 @@ Project overview.
 
 *Ver. 2* - Done on 12th August 2010
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/FS5ezwCNwDyS1xDXEl-CCs_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh5.ggpht.com/_BT5G2024qqo/TI3GE5_stoI/AAAAAAAAABg/2I3KXKSlcpc/s144/GUI%20ver%202.jpeg" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
-
+-------
 === Ideas from members ===
 
 *Choo Seah Ling*
 
-Main frame
+_Main frame_
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/323RBxFXX9r907Vb-MvPNM_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh3.ggpht.com/_BT5G2024qqo/TJYzeEwYiPI/AAAAAAAAACA/CEoQlcoFcRs/s144/GUI_1_csl.PNG" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
 Description : 
 When user opens an existing music file, a new panel will be added to the main frame from top to bottom. As shown in the figure, a panel for file named "File1" is added. User can implement all the program features easily. The buttons (Record, Stop, Play All) on the bottom of the main frame link to the Playback and Mixing module. User can add new music file by choosing File option in menu bar. 
 
-Virtual Piano
+
+_Virtual Piano_
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/FkdEvir6HHwLtt3oQtXUmc_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh6.ggpht.com/_BT5G2024qqo/TJYzeGiTPAI/AAAAAAAAACE/auOrUTU2rWo/s144/GUI_2_csl.PNG" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
 Description : 
 An internal frame that will pop up when user choose to add new file or compose new song. User can choose instruments available from a drop-down list. Playing music often involve  more than one key at one time. Therefore, this design let the user switch between using mouse and keyboard. This internal frame is not modal. User can press "Record" button in the main frame to start recording.
 
-Virtual Music Note
+
+_Virtual Music Note_
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/3wJkIeIKrOUFsVxVn1DVMc_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh5.ggpht.com/_BT5G2024qqo/TJYzeCk2YoI/AAAAAAAAACI/YR6ykbt0oEU/s144/GUI_3_csl.PNG" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
 Description:
 An internal frame that pops up together with Virtual Piano. As user pressed keys at Virtual Piano, a bar will be generated in Virtual Music Note. Color and length of bars depend on the octave selected and the time user pressed down a key.
 
-Adding new instrument
+
+_Adding new instrument_
 <table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/ZV40IQ5BZEn-_eVbtvcAL8_PEj_bAfbZpOCtZQSLxW0?feat=embedwebsite"><img src="http://lh4.ggpht.com/_BT5G2024qqo/TJY6XX9I5OI/AAAAAAAAACc/4Vp1ZwcEx_8/s144/GUI_4_csl.PNG" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/104972527995182877348/CAT200Group9Attachments?authkey=Gv1sRgCIfboviE9rgy&feat=embedwebsite">CAT 200 Group 9 - Attachments</a></td></tr></table>
 
 Description :
