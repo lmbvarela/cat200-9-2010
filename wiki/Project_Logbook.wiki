@@ -14,6 +14,7 @@ This is a page that will act as our group’s project logbook. The progress of t
 ||                     || Playback module code submitted to Google Code ||
 ||                     || Recording module code submitted to Google Code||
 ||13th September 2010  || Wiki Page created in Google Code ||
+||18th September 2010  || Instrument module (implemented in Piano.java) submitted to Google Code||
 ||29th October 2010    || Project Demonstration ||
 
 
