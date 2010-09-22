@@ -115,4 +115,14 @@ An internal frame that pops up when user choose to add new instrument from Instr
 
 Description: GUI Design for advanced visual instrument
 
+*Lim Yeong Chuin*
+
+<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/ZUDyjnOozzworQ4rNphh-A?feat=embedwebsite"><img src="http://lh6.ggpht.com/_jnNNAl2ZuXg/TJoK_FCresI/AAAAAAAAAA0/qy2uksHv9aM/s144/mainmenu.JPG" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/108050462188516724364/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
+Description: Main menu for Advanced Visual Instrument
+
+<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/sfTdYR1nOsRrEGNUyNezPA?feat=embedwebsite"><img src="http://lh5.ggpht.com/_jnNNAl2ZuXg/TJoK_lowF4I/AAAAAAAAAA8/aSdIGQH28Nw/s144/play.JPG" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/108050462188516724364/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
+Description: GUI for compose new music
+
+<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/CO3KRyPmL17gLgRd9fmLdw?feat=embedwebsite"><img src="http://lh3.ggpht.com/_jnNNAl2ZuXg/TJoLALhgsRI/AAAAAAAAABA/m-3heQ0f88A/s144/mixing.JPG" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/108050462188516724364/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
+Description: Mixing different audio file into one
 ---------
