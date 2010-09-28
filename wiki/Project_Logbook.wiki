@@ -128,3 +128,15 @@ Agendas	:
  * All members checked through other’s code and upload their own code to Google Code accordingly.
  * Modifications have been done to the initial UML Diagram. (Please refer to Documentation page for final version of the diagrams.)
  * Wong unable to upload the code due to connection problem between Eclipse and Google Code. (Issue solved on 3rd September 2010)
+
+=== Meeting 8 ===
+Date		: 23rd September 2010
+
+Time		: 2.00 p.m. – 2.30 p.m.
+
+Attendance	: All members
+
+Agendas	:
+ * The GUI designs submitted by all members have been discussed. Different design features from all designs has been combined.
+ * Pitch issue has been brought up by Khoo. The algorithm needed to change the pitch of a new sound recorded is not clear. (Issue solved by referring to online materials)
+ * All members are reminded to follow the Gannt Chart.
