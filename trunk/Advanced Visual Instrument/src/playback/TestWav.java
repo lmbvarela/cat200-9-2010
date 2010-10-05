@@ -1,3 +1,4 @@
+//must have the "audio" directory to run the program
 import java.awt.*;
 
 
