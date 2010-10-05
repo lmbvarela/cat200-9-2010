@@ -1,231 +1,137 @@
-import java.awt.*;
-
-
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.border.*;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import java.io.*;
+import javax.sound.sampled.*;
 
 /**
- * Based on SoundPlayerGUI.java
+ * Based on SoundEngine.java
  * @author Michael Kolling and David J Barnes 
  * @version 1.0
  */
-public class TestWav extends JFrame
-    implements  ActionListener
+public class Playback
 {
-    
-    private static final String AUDIO_DIR = "audio";
-    
-    private JList fileList;
-    private JLabel infoLabel;
-    private Playback player;
-
-    /**
-     * Main method for starting the player from a command line.
-     */
-    public static void main(String[] args)
-    {
-    	TestWav gui = new TestWav();
-    }
+    // the following three fields hold information about the sound clip
+    // currently loaded in this engine
+    private Clip currentSoundClip = null;
+    private int currentSoundDuration = 0;
+    private int currentSoundFrameLength = 0;
     
     /**
-     * Create a SoundPlayer and display its GUI on screen.
+     * Load and play a specified sound file. If the file is not in a
+     * recognised file format, false is returned. Otherwise the sound
+     * is started and true is returned. The method returns immediately
+     * after the sound starts (not after the sound finishes).
+     * 
+     * @param soundFile  The file to be loaded.
+     * @return  True, if the sound file could be loaded, false otherwise.
      */
-    public TestWav()
+    public boolean play(File soundFile)
     {
-        super("AudioPlayer");
-        player = new Playback();
-        String[] audioFileNames = findFiles(AUDIO_DIR, null);
-        makeFrame(audioFileNames);
-    }
-
-    /**
-     * Play the sound file currently selected in the file list. If there is no
-     * selection in the list, or if the selected file is not a sound file, 
-     * do nothing.
-     */
-    private void play()
-    {
-        String filename = (String)fileList.getSelectedValue();
-        if(filename == null) {  // nothing selected
-            return;
-        }
-       // slider.setValue(0);
-        boolean successful = player.play(new File(AUDIO_DIR, filename));
-        if(successful) {
-            showInfo(filename + " (" + player.getDuration() + " seconds)");
+        if(loadSound(soundFile)) {
+            currentSoundClip.start();
+            return true;
         }
         else {
-            showInfo("Could not play file - unknown format");
+            return false;
         }
     }
 
     /**
-     * Display information about a selected sound file (name and clip length).
-     * @param message The message to display.
+     * Stop the currently playing sound (if there is one playing). If no 
+     * sound is playing, this method has no effect.
      */
-    private void showInfo(String message)
+    public void stop()
     {
-        infoLabel.setText(message);
-    }
-    
-    /**
-     * Stop the currently playing sound file (if there is one playing).
-     */
-    private void stop()
-    {
-        player.stop();
-    }
+        if(currentSoundClip != null) {
+            currentSoundClip.stop();
+            currentSoundClip = null;
+        }
+    }            
 
     /**
-     * Stop the currently playing sound file (if there is one playing).
+     * Pause the currently playing sound. If no sound is currently playing,
+     * calling this method has no effect.
      */
-    private void pause()
+    public void pause()
     {
-        player.pause();
+        if(currentSoundClip != null) {
+            currentSoundClip.stop();
+        }
     }
 
     /**
-     * Resume a previously suspended sound file.
+     * Resume the currently paused sound. If no sound is currently paused,
+     * this method has no effect.
      */
-    private void resume()
+    public void resume()
     {
-        player.resume();
+        if(currentSoundClip != null) {
+            currentSoundClip.start();
+        }
     }
 
-    
     /**
-     * Load the file names of all files in the given directory.
-     * @param dirName Directory (folder) name.
-     * @param suffix File suffix of interest.
-     * @return The names of files found.
+     * Set the current playing position in the currently playing sound to 'value'.
+     * 'value' is a percentage value (0 to 100). If there is no sound currently
+     * playing, this method has no effect.
+     * 
+     * @param value  The target position in the sound file, as a percentage.
      */
-    private String[] findFiles(String dirName, String suffix)
-    {
-        File dir = new File(dirName);
-        if(dir.isDirectory()) {
-            String[] allFiles = dir.list();
-            if(suffix == null) {
-                return allFiles;
-            }
-            else {
-                List<String> selected = new ArrayList<String>();
-                for(String filename : allFiles) {
-                    if(filename.endsWith(suffix)) {
-                        selected.add(filename);
-                    }
-                }
-                return selected.toArray(new String[selected.size()]);
-            }
-        }
-        else {
-            System.out.println("Error: " + dirName + " must be a directory");
-            return null;
-        }
-    }
-
-    public void actionPerformed(ActionEvent evt) 
-    {
-        JComboBox cb = (JComboBox)evt.getSource();
-        String format = (String)cb.getSelectedItem();
-        if(format.equals("all formats")) {
-            format = null;
-        }
-        fileList.setListData(findFiles(AUDIO_DIR, format));
-    }
-
-   
-    private void makeFrame(String[] audioFiles)
-    {
-        // the following makes sure that our application exits when
-        // the user closes its window
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
-        JPanel contentPane = (JPanel)getContentPane();
-        contentPane.setBorder(new EmptyBorder(6, 10, 10, 10));
-
-      
-        
-        // Specify the layout manager with nice spacing
-        contentPane.setLayout(new BorderLayout(8, 8));
-
-        // Create the left side with combobox and scroll list
-        JPanel leftPane = new JPanel();
-        {
-            leftPane.setLayout(new BorderLayout(8, 8));
-
-            fileList = new JList(audioFiles);
-            fileList.setForeground(new Color(140,171,226));
-            fileList.setBackground(new Color(0,0,0));
-            fileList.setSelectionBackground(new Color(87,49,134));
-            fileList.setSelectionForeground(new Color(140,171,226));
-            JScrollPane scrollPane = new JScrollPane(fileList);
-            scrollPane.setColumnHeaderView(new JLabel("Audio files"));
-            leftPane.add(scrollPane, BorderLayout.CENTER);
-        }
-        contentPane.add(leftPane, BorderLayout.CENTER);
-
-        // Create the center with image, text label, and slider
-       JPanel centerPane = new JPanel();
-        {
-            centerPane.setLayout(new BorderLayout(8, 8));
-    
-           
-            
-
-            infoLabel = new JLabel("  ");
-            infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            infoLabel.setForeground(new Color(140,171,226));
-            centerPane.add(infoLabel, BorderLayout.CENTER);
-
-        }
-        contentPane.add(centerPane, BorderLayout.EAST);
-
-        // Create the toolbar with the buttons
-        JPanel toolbar = new JPanel();
-        {
-            toolbar.setLayout(new GridLayout(1, 0));
   
-            JButton button = new JButton("Play");
-            button.addActionListener(new ActionListener() {
-                                   public void actionPerformed(ActionEvent e) { play(); }
-                               });
-            toolbar.add(button);
-            
-            button = new JButton("Stop");
-            button.addActionListener(new ActionListener() {
-                                   public void actionPerformed(ActionEvent e) { stop(); }
-                               });
-            toolbar.add(button);
     
-            button = new JButton("Pause");
-            button.addActionListener(new ActionListener() {
-                                   public void actionPerformed(ActionEvent e) { pause(); }
-                               });
-            toolbar.add(button);
-            
-            button = new JButton("Resume");
-            button.addActionListener(new ActionListener() {
-                                   public void actionPerformed(ActionEvent e) { resume(); }
-                               });
-            toolbar.add(button);
-        }
-        
-        contentPane.add(toolbar, BorderLayout.NORTH);
+    
+   
+   
 
-        // building is done - arrange the components      
-        pack();
-        
-        // place this frame at the center of the screen and show
-        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(d.width/2 - getWidth()/2, d.height/2 - getHeight()/2);
-        setVisible(true);
+    
+    public int getDuration()
+    {
+        return currentSoundDuration;
+    }
+
+    /**
+     * Load the sound file supplied by the parameter into this sound engine.
+     * 
+     * @return  True if successful, false if the file could not be decoded.
+     */
+    private boolean loadSound(File file) 
+    {
+        currentSoundDuration = 0;
+
+        try {
+            AudioInputStream stream = AudioSystem.getAudioInputStream(file);
+            AudioFormat format = stream.getFormat();
+
+            // we cannot play ALAW/ULAW, so we convert them to PCM
+            //
+            if ((format.getEncoding() == AudioFormat.Encoding.ULAW) ||
+                (format.getEncoding() == AudioFormat.Encoding.ALAW)) 
+            {
+                AudioFormat tmp = new AudioFormat(
+                                          AudioFormat.Encoding.PCM_SIGNED, 
+                                          format.getSampleRate(),
+                                          format.getSampleSizeInBits() * 2,
+                                          format.getChannels(),
+                                          format.getFrameSize() * 2,
+                                          format.getFrameRate(),
+                                          true);
+                stream = AudioSystem.getAudioInputStream(tmp, stream);
+                format = tmp;
+            }
+            DataLine.Info info = new DataLine.Info(Clip.class, 
+                                           stream.getFormat(),
+                                           ((int) stream.getFrameLength() *
+                                           format.getFrameSize()));
+
+            currentSoundClip = (Clip) AudioSystem.getLine(info);
+            currentSoundClip.open(stream);
+            currentSoundFrameLength = (int) stream.getFrameLength();
+            currentSoundDuration = (int) (currentSoundClip.getBufferSize() / 
+                              (currentSoundClip.getFormat().getFrameSize() * 
+                              currentSoundClip.getFormat().getFrameRate()));
+            return true;
+        } catch (Exception ex) {
+            currentSoundClip = null;
+            return false;
+        }
     }
 }
