@@ -24,6 +24,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 
 public class Piano extends JInternalFrame{
@@ -39,11 +40,6 @@ public class Piano extends JInternalFrame{
 	JPanel optPanel;
 	Box optBox = Box.createHorizontalBox();
 	layout keyboard;
-
-	
-  public static void main(String[] args) {
-	  new Piano();
-  }
 
   public Piano(){
     setTitle("Virtual Piano");
@@ -69,8 +65,10 @@ public class Piano extends JInternalFrame{
     
     optPanel = new JPanel(); //Create a new JPanel to hold the instrument combo box and mode radio button
     optPanel.setLayout(new BoxLayout(optPanel,BoxLayout.Y_AXIS));
+    instruments.setAlignmentX(LEFT_ALIGNMENT);
     optBox.setAlignmentX(LEFT_ALIGNMENT);
-    optPanel.add(instruments); 
+    optPanel.add(instruments);
+    optPanel.add(Box.createHorizontalStrut(2));
     optPanel.add(optBox);
     getContentPane().add(optPanel, BorderLayout.NORTH);
     
@@ -185,6 +183,9 @@ public class Piano extends JInternalFrame{
 	  int key;
 	  int octaveNum = 3;
 	  boolean keyFound = false;
+	  long prevKey = 0;
+	  private Timer timer = new Timer(1, new TimerListener());
+	  boolean released = false;
 	  
 	  public void layout(){
 		  addMouseListener(this);
@@ -281,13 +282,13 @@ public class Piano extends JInternalFrame{
 		drawKey.setColor(Color.black);
 			
 		if((keyNum + 1) % 7 == 1 || (keyNum + 1) % 7 == 4)           //Draw black key on the right
-			drawKey.fillRect(whiteKeyStartX[keyNum] + 2*blackKey, (int)(height*0.3), 2*blackKey, (int)(height*0.38));
+			drawKey.fillRect(whiteKeyStartX[keyNum] + 2*blackKey, (int)(height*0.3),  2*blackKey, (int)(height*0.38));
 		else if ((keyNum + 1) % 7 == 0 || (keyNum + 1) % 7 == 3)     //Draw black key on the left
-			drawKey.fillRect(whiteKeyStartX[keyNum], (int)(height*0.3), blackKey - 1, (int)(height*0.38));
+			drawKey.fillRect(whiteKeyStartX[keyNum], (int)(height*0.3), blackKey - 2, (int)(height*0.38));
 		else 	//draw black key on the centre
 		{
-			drawKey.fillRect(whiteKeyStartX[keyNum], (int)(height*0.3), blackKey-1, (int)(height*0.38));
-			drawKey.fillRect(whiteKeyStartX[keyNum] + 2*blackKey, (int)(height*0.3), blackKey, (int)(height*0.38));
+			drawKey.fillRect(whiteKeyStartX[keyNum], (int)(height*0.3), blackKey - 2 , (int)(height*0.38));
+			drawKey.fillRect(whiteKeyStartX[keyNum] + 2*blackKey, (int)(height*0.3), blackKey + 1, (int)(height*0.38));
 		}
 		//white key note assigning
 		if (keyNum % 7 == 0)
@@ -363,7 +364,13 @@ public class Piano extends JInternalFrame{
   
   
   public void keyPressed(KeyEvent evt) {
-
+	
+	released = false; //Prevent auto-repeat key for keyReleased
+	timer.stop();
+	
+	//Check whether it is an auto-repeat key for keyPressed before play note
+	if(evt.getWhen() - prevKey != 0)
+	{
        int keyValue = evt.getKeyCode();	
 	
        switch (keyValue){
@@ -418,15 +425,27 @@ public class Piano extends JInternalFrame{
     	   }
     	   break;
 	}//end switch
+   } //end if
 }
 
 public void keyReleased(KeyEvent evt) {
-	channel.noteOff(key + 24, 100);
-	repaint();
+	prevKey = evt.getWhen();  //Prevent auto-repeat key for keyPressed
+	
+	if(released == false)  //Prevent auto-repeat key for keyReleased
+	timer.restart();
 }
 
 public void keyTyped(KeyEvent evt) { }
 
+private class TimerListener implements ActionListener{
+	//Prevent auto-repeat key for keyReleased
+    public void actionPerformed(ActionEvent e){
+    	released = true;
+    	timer.stop();
+    	channel.noteOff(key + 24, 100);
+    	repaint();
+    }
+}//end TimerListener
 }// end layout()
   
 }// end piano()
