@@ -18,16 +18,16 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Synthesizer;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 
-public class Piano extends JInternalFrame{
+public class Piano extends JFrame{
 	
 	private MidiChannel channel;
 	private Synthesizer synthesizer;
@@ -44,7 +44,6 @@ public class Piano extends JInternalFrame{
   public Piano(){
     setTitle("Virtual Piano");
     setSize(new Dimension(1083,250));
-    setClosable(true);
     setResizable(false);
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     
@@ -77,8 +76,6 @@ public class Piano extends JInternalFrame{
     
     keyboard = new layout();
     getContentPane().add(keyboard);
-    
-    setVisible(true); 
     
     ActionListener al;
     al = new ActionListener (){
