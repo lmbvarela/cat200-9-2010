@@ -17,7 +17,7 @@ import java.text.*;
  * @version 1.11
  * @author Brian Lichtenwalter  
  */
-public class AudioCapture01 extends JPanel implements ActionListener,ControlContext {
+public class AudioCapture01 extends JPanel implements ActionListener{
 
     final int bufSize = 18000;
    
@@ -74,12 +74,7 @@ public class AudioCapture01 extends JPanel implements ActionListener,ControlCont
     }
 
     public void open() { }
-    public void close(){
-    	if(playback.thread !=null)
-    		playBtn.doClick(0);
-    	if(capture.thread !=null)
-    		captBtn.doClick(0);
-    }
+ 
     private JButton addButton(String name, JPanel p, boolean state) {
         JButton button = new JButton(name);
         button.addActionListener(this);
