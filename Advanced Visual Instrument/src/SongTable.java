@@ -4,39 +4,100 @@
  * Song Table implements SongTableEditor  
 */
 
+import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.MouseEvent;
-import java.util.EventObject;
-
+import javax.swing.AbstractCellEditor;
 import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.EventListenerList;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-
 
 public class SongTable extends JTable{
 
-	// Constructor
+	/**
+	 * Constructor
+	 */
+	
 	public SongTable(){
-		super (0, 0);
+		super (0, 0);  //Create SongTable with 0 row and 0 column
+		addColumn("Files Opened");
+		setDefaultRenderer(SongPanel.class, new SongTableRenderer());
 		setDefaultEditor(SongPanel.class, new SongTableEditor());
-		setSurrendersFocusOnKeystroke(true);
+		setRowHeight(150);  //SongPanel height is 150
 	}
 	
-	// To add a new column
-	public void addColumn(String columnName){
-		DefaultTableModel model = (DefaultTableModel) getModel();
-        model.addColumn(columnName);
-	}
 	
-	// To add single or multiple rows
+	/**
+	 *  Override function getCellRenderer of JTable
+	 *  
+	 *  Make sure cell renderer is not null
+	 */
+	
+	 public TableCellRenderer getCellRenderer(final int row, final int column) {
+		 TableColumn tableColumn = getColumnModel().getColumn(column);
+	     TableCellRenderer renderer = tableColumn.getCellRenderer();
+	        if (renderer == null) {
+	            Class c = getColumnClass(column);
+	            if (c.equals(Object.class)) {
+	                Object o = getValueAt(row, column);
+	                if (o != null) {
+	                    c = getValueAt(row, column).getClass();
+	                }
+	            }
+	            renderer = getDefaultRenderer(c);
+	        }
+	        return renderer;
+	    }
+	 
+	 
+	/** Override function getCellEditor of JTable
+	 *  
+	 *  Make sure cell editor is not null
+	 */
+	 
+	 public TableCellEditor getCellEditor(final int row, final int column) {
+	        TableColumn tableColumn = getColumnModel().getColumn(column);
+	        TableCellEditor editor = tableColumn.getCellEditor();
+	        if (editor == null) {
+	            Class c = getColumnClass(column);
+	            if (c.equals(Object.class)) {
+	                Object o = getValueAt(row, column);
+	                if (o != null) {
+	                    c = getValueAt(row, column).getClass();
+	                }
+	            }
+	            editor = getDefaultEditor(c);
+	        }
+	        return editor;
+	    }
+	
+	 
+	/**
+	 *  Add a new column into SongTable
+	 * 
+	 *  By default, SongTable only has one column
+	 */
+	
+	public void addColumn(String columnNames) {
+        DefaultTableModel model = (DefaultTableModel) getModel();
+            model.addColumn(columnNames);
+    }
+	
+	
+	/**
+	 *  Add a new row or multiple rows into SongTable 
+	 */
+	
 	public void addRow(final JComponent... components) {
-		DefaultTableModel model = (DefaultTableModel) getModel();
+        DefaultTableModel model = (DefaultTableModel) getModel();
+        while (model.getColumnCount() < components.length) {
+            model.addColumn("");
+        }
         model.addRow(components);
         int h = 0;
         for (JComponent comp : components) {
@@ -46,114 +107,65 @@ public class SongTable extends JTable{
             }
         }
         setRowHeight(getRowCount() - 1, h);
+        
     }
 	
-	// Return proper cell editor
-	public TableCellEditor getCellEditor(final int row, final int column) {
-        TableColumn tableColumn = getColumnModel().getColumn(column);
-        TableCellEditor editor = tableColumn.getCellEditor();
-        if (editor == null) {
-            Class c = getColumnClass(column);
-            if (c.equals(Object.class)) {
-                Object o = getValueAt(row, column);
-                if (o != null) {
-                    c = getValueAt(row, column).getClass();
-                }
-            }
-            editor = getDefaultEditor(c);
-        }
-        return editor;
-    }
 	
-	// SongTableEditor
-	public class SongTableEditor implements TableCellEditor{
-		
-		protected EventListenerList listeners = new EventListenerList();
-		protected transient ChangeEvent changeEvent = null;
-		protected SongPanel newSong = null;
-		@Override
-		
-		public Component getTableCellEditorComponent(JTable table,
-				Object value, boolean isSelected, int row, int column) {
-			newSong = (SongPanel) value;
-			return newSong;
-		}
-		@Override
-		public Object getCellEditorValue() {
-			return newSong;
-		}
-		@Override
-		public void addCellEditorListener(CellEditorListener l) {
-			listeners.add(CellEditorListener.class, l);
-			
-		}
-		@Override
-		public void cancelCellEditing() {
-			fireEditingCanceled();
-			
-		}
-		@Override
-		public boolean isCellEditable(EventObject anEvent) {
-			return true;
-		}
-		@Override
-		public void removeCellEditorListener(CellEditorListener l) {
-			listeners.remove(CellEditorListener.class, l);
-			
-		}
-		@Override
-		public boolean shouldSelectCell(EventObject anEvent) {
-			if (newSong != null && anEvent instanceof MouseEvent
-                    && ((MouseEvent) anEvent).getID() == MouseEvent.MOUSE_PRESSED) {
-                Component dispatchComponent =
-                        SwingUtilities.getDeepestComponentAt(newSong, 3, 3);
-                MouseEvent e = (MouseEvent) anEvent;
-                MouseEvent e2 = new MouseEvent(dispatchComponent,
-                        MouseEvent.MOUSE_RELEASED, e.getWhen() + 100000,
-                        e.getModifiers(), 3, 3, e.getClickCount(), e.isPopupTrigger());
-                dispatchComponent.dispatchEvent(e2);
-                e2 = new MouseEvent(dispatchComponent, MouseEvent.MOUSE_CLICKED,
-                        e.getWhen() + 100001, e.getModifiers(), 3, 3, 1, e.isPopupTrigger());
-                dispatchComponent.dispatchEvent(e2);
-            }
-			return true;
-		}
-		@Override
-		public boolean stopCellEditing() {
-			fireEditingStopped();
-            return true;
-		}
-		
-		protected void fireEditingCanceled() {
-            Object[] listeners = listenerList.getListenerList();
-            
-            // Process the listeners last to first, notifying
-            // those that are interested in this event
-            for (int i = listeners.length - 2; i >= 0; i -= 2) {
-                if (listeners[i] == CellEditorListener.class) {
-                    if (changeEvent == null) {
-                        changeEvent = new ChangeEvent(this);
-                    }
-                    ((CellEditorListener) listeners[i + 1]).editingCanceled(changeEvent);
-                }
-            }
-		}
-		
-		protected void fireEditingStopped() {//used in stopCellEditing
-            Object[] listeners = listenerList.getListenerList();
-            // Process the listeners last to first, notifying
-            // those that are interested in this event
-            for (int i = listeners.length - 2; i >= 0; i -= 2) {
-                if (listeners[i] == CellEditorListener.class) {
-                    // Lazily create the event:
-                    if (changeEvent == null) {
-                        changeEvent = new ChangeEvent(this);
-                    }
-                    ((CellEditorListener) listeners[i + 1]).editingStopped(changeEvent);
-                }
-            }
-        }
+	/**
+	 * Delete a row from SongTable 
+	 */
+	public void deleteRow(int rowIndex){
+		DefaultTableModel model = (DefaultTableModel) getModel();
+		SongPanel song = (SongPanel) model.getValueAt(rowIndex, 0);
+		removeEditor();      //stop cell editor
+		song.player.stop();  //stop the song
+		model.removeRow(rowIndex);
 	}
 	
 	
+	/**
+	 * SongTableRenderer that is used to draw SongPanel
+	 */
+	class SongTableRenderer extends DefaultTableCellRenderer{
+		
+		public SongPanel getTableCellRendererComponent(JTable table, Object value, 
+				boolean isSelected, boolean isFocused, int row, int column){
+			
+			if(value == null)
+				return null;
+			
+			SongPanel song = (SongPanel) value;
+			
+			if(isSelected)
+				song.setBorder(new LineBorder(Color.black, 2));
+			else
+				song.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+			
+			return song;
+		}
+	}
+	
+	
+	/**
+	 * SongTableEditor to enable the interaction between user and each SongPanel
+	 */
+	class SongTableEditor extends AbstractCellEditor implements TableCellEditor{
+
+		SongPanel song;
+		@Override
+		public Object getCellEditorValue() {
+			return song;
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table,
+				Object value, boolean isSelected, int row, int column) {
+			
+			if(value == null)
+				return null;
+			
+			song = (SongPanel) value;
+			return song;
+		}	
+	}
 }

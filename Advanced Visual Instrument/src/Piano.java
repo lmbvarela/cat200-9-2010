@@ -43,7 +43,8 @@ public class Piano extends JFrame{
 
   public Piano(){
     setTitle("Virtual Piano");
-    setSize(new Dimension(1083,250));
+    setSize(new Dimension(1078,250));
+    setLocationRelativeTo(null);
     setResizable(false);
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     
