@@ -1,7 +1,13 @@
-// CAT 200 Group Project
-// Main Application frame
+/** CAT 200 Group Project
+ *  Main Application frame
+ *  Prerequisite : 
+ *  In src file:
+ *    microphone.GIF, play.gif, pause.gif, stop.gif and volume.gif
+ *    Playback.java, AudioCapture01.java, SongPanel.java, SongTable.java, RoundButton.java,
+ *    Piano.java
+ */
 
-import java.awt.Component;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +17,6 @@ import java.net.URL;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,17 +26,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.UIManager;
+import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableCellRenderer;
 
 public class App_Frame extends JFrame implements ActionListener{
 
 	private JMenuBar menuBar;
-	private JMenu fileMenu, playMenu, toolMenu, saveSubMenu;
-	private JMenuItem newItem, openItem, exitItem,
-					  saveWavItem, saveNoteItem,
+	private JMenu fileMenu, playMenu, toolMenu;
+	private JMenuItem openItem, exitItem,
 					  playAllItem, pauseItem, stopItem,
 					  pianoItem1, pianoItem2, recordItem;
 	
@@ -40,30 +42,28 @@ public class App_Frame extends JFrame implements ActionListener{
 	private File soundFile;
 	
 	private JPanel quickAccessPanel;
-	private JButton addButton, pianoButton1, pianoButton2;
-	private RoundButton playAllButton, stopAllButton;
-	URL playPic = getClass().getResource("play.gif");
-	URL pausePic = getClass().getResource("pause.gif");
-	URL stopPic = getClass().getResource("stop.gif");
-	ImageIcon playIcon = new ImageIcon(playPic);
-	ImageIcon pauseIcon = new ImageIcon(pausePic);
-	ImageIcon stopIcon = new ImageIcon(stopPic);
+	private JButton addButton, deleteButton, pianoButton1, pianoButton2;
+	private RoundButton micButton,playAllButton, pauseAllButton, stopAllButton;
+	private URL playPic = getClass().getResource("play.gif");
+	private URL pausePic = getClass().getResource("pause.gif");
+	private URL stopPic = getClass().getResource("stop.gif");
+	private URL microphonePic = getClass().getResource("microphone.GIF");
+	private ImageIcon playIcon = new ImageIcon(playPic);
+	private ImageIcon pauseIcon = new ImageIcon(pausePic);
+	private ImageIcon stopIcon = new ImageIcon(stopPic);
+	private ImageIcon microphoneIcon = new ImageIcon (microphonePic);
 	
-	JDesktopPane mainFrame;
 	private SongTable fileTable;
 	private JScrollPane fileTablePane;
-	SongPanel songPanel;
-	Piano virtualPiano;
+	private SongPanel songPanel;
+	private Piano virtualPiano;
+	private AudioCapture01 audioCapture;
+	
+	private int songCount = 0;
+	private Timer timer = new Timer(500, new TimerListener());
 	
 	public static void main (String [] args){
-		  /*try {
-		        UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-		    } 
-		    catch (Exception e) {
-		       System.out.println("ERROR : Unable to set to current windows look and feel");
-		    }*/
-		new App_Frame();
+			new App_Frame();
 	}
 	
 	//Constructor
@@ -79,31 +79,20 @@ public class App_Frame extends JFrame implements ActionListener{
 		
 	    //File menu
 	    fileMenu = new JMenu("File");
-	    newItem = new JMenuItem("New");
 	    openItem = new JMenuItem("Open");
-	    saveSubMenu = new JMenu("Save");
-	    saveWavItem = new JMenuItem("Save As WAV");
-	    saveNoteItem = new JMenuItem("Save As Music Note");
 	    exitItem = new JMenuItem("Exit");
 	    
-	    fileMenu.add(newItem);
 	    fileMenu.add(openItem);
-	    fileMenu.add(saveSubMenu);
 	    fileMenu.add(exitItem);
-	    saveSubMenu.add(saveWavItem);
-	    saveSubMenu.add(saveNoteItem);
 	    
-	    newItem.addActionListener(this);
 	    openItem.addActionListener(this);
-	    saveWavItem.addActionListener(this);
-	    saveNoteItem.addActionListener(this);
 	    exitItem.addActionListener(this);
 	    
 	    //Play Menu
 	    playMenu = new JMenu("Play");
 	    playAllItem = new JMenuItem("Play All");
-	    pauseItem = new JMenuItem("Pause");
-	    stopItem = new JMenuItem("Stop");
+	    pauseItem = new JMenuItem("Pause All");
+	    stopItem = new JMenuItem("Stop All");
 	    
 	    playMenu.add(playAllItem);
 	    playMenu.add(pauseItem);
@@ -140,36 +129,46 @@ public class App_Frame extends JFrame implements ActionListener{
 	    addButton.setActionCommand("Add");
 	    addButton.addActionListener(this);
 	    
+	    deleteButton = new JButton("Delete Audio File");
+	    deleteButton.setActionCommand("Delete");
+	    deleteButton.addActionListener(this);
+	    
 	    pianoButton1 = new JButton("Virtual Piano v1");
 	    pianoButton1.addActionListener(this);
 	    
 	    pianoButton2 = new JButton("Virtual Piano v2");
 	    pianoButton2.addActionListener(this);
 	    
+	    micButton = new RoundButton(microphoneIcon);
+	    micButton.setActionCommand("Record from Microphone");
+	    micButton.addActionListener(this);
+	    
 	    playAllButton = new RoundButton(playIcon);
 	    playAllButton.setActionCommand("Play All");
 	    playAllButton.addActionListener(this);
 	    
-	    stopAllButton = new RoundButton(stopIcon);
-	    stopAllButton.setActionCommand("Stop");
-	    stopAllButton.addActionListener(this);
+	    pauseAllButton = new RoundButton(pauseIcon);
+	    pauseAllButton.setActionCommand("Pause All");
+	    pauseAllButton.addActionListener(this);
 	    
+	    stopAllButton = new RoundButton(stopIcon);
+	    stopAllButton.setActionCommand("Stop All");
+	    stopAllButton.addActionListener(this);
+	   
 	    quickAccessPanel = new JPanel();
 	    quickAccessPanel.add(addButton);
+	    quickAccessPanel.add(deleteButton);
 	    quickAccessPanel.add(pianoButton1);
 	    quickAccessPanel.add(pianoButton2);
+	    quickAccessPanel.add(micButton);
 	    quickAccessPanel.add(playAllButton);
+	    quickAccessPanel.add(pauseAllButton);
 	    quickAccessPanel.add(stopAllButton);
 	    quickAccessPanel.setAlignmentX(LEFT_ALIGNMENT);
 	    
 	    
 	    //File Panel
 	    fileTable = new SongTable();
-	    fileTable.addColumn("Files Opened");
-	    fileTable.getColumnModel().getColumn(0).setCellRenderer(new CustomTableCellRenderer());
-	    fileTable.setRowHeight(150);
-	    fileTable.setFillsViewportHeight(true);
-
 	    fileTablePane = new JScrollPane(fileTable);
 	    
 	    
@@ -188,15 +187,14 @@ public class App_Frame extends JFrame implements ActionListener{
 	    virtualPiano = new Piano();
 	    virtualPiano.setVisible(false);
 	    
-	    //tableUpdate task
+	    //AudioCapture01
+	    audioCapture = new AudioCapture01();
+	    audioCapture.setVisible(false);
+	    
 	    setVisible(true); 
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		
-		if(e.getActionCommand() == "New")
-		  System.out.println("Not implemented yet");
-
 		
 		if(e.getActionCommand() == "Open" || e.getActionCommand() == "Add"){
 		
@@ -204,34 +202,58 @@ public class App_Frame extends JFrame implements ActionListener{
 				soundFile = fileChooser.getSelectedFile();
 				songPanel = new SongPanel(soundFile);
 				fileTable.addRow(songPanel);
+				timer.start();
 			}
 		}
 		
-		
-		if(e.getActionCommand() == "Save As WAV")
-			System.out.println("Not implemented yet");
-
-		if(e.getActionCommand() == "Save As Music Note")
-			System.out.println("Not implemented yet");
-		
 		if(e.getActionCommand() == "Exit"){	
-			System.out.println("Here");
 			int opt = JOptionPane.showConfirmDialog(getContentPane(), 
 					     "Exit Advanced Visual Instruments?","Exit", JOptionPane.YES_NO_CANCEL_OPTION);
-			if(opt == JOptionPane.YES_OPTION)
+			if(opt == JOptionPane.YES_OPTION){
+				timer.stop();
 				System.exit(0);
+			}
 		}
 		
-		if(e.getActionCommand() == "Play All")
-			System.out.println("Not implemented yet");
-
+		if(e.getActionCommand() == "Delete"){
+			int rowIndex = fileTable.getSelectedRow();
+			fileTable.deleteRow(rowIndex);
+		}
 		
-		if(e.getActionCommand() == "Pause")
-			System.out.println("Not implemented yet");
+		if(e.getActionCommand() == "Play All"){
+			songCount = fileTable.getRowCount();
+			
+			if(songCount > 0){
+	    		for(int i = 0; i < songCount; i++){
+	    			songPanel = (SongPanel) fileTable.getModel().getValueAt(i, 0);
+	    			songPanel.playSound();
+	    		}
+	    	}// end if
+		}
+			
+		
+		if(e.getActionCommand() == "Pause All"){
+			songCount = fileTable.getRowCount();
+			
+			if(songCount > 0){
+	    		for(int i = 0; i < songCount; i++){
+	    			songPanel = (SongPanel) fileTable.getModel().getValueAt(i, 0);
+	    			songPanel.pauseSound();
+	    		}
+	    	}// end if
+		}
 		
 		
-		if(e.getActionCommand() == "Stop")
-			System.out.println("Not implemented yet");	
+		if(e.getActionCommand() == "Stop All"){
+			songCount = fileTable.getRowCount();
+			
+			if(songCount > 0){
+	    		for(int i = 0; i < songCount; i++){
+	    			songPanel = (SongPanel) fileTable.getModel().getValueAt(i, 0);
+	    			songPanel.stopSound();
+	    		}
+	    	}// end if
+		}
 		
 		
 		if (e.getActionCommand() == "Virtual Piano v1")
@@ -241,20 +263,31 @@ public class App_Frame extends JFrame implements ActionListener{
 		if (e.getActionCommand() == "Virtual Piano v2")
 			System.out.println("Not implemented yet");
 		
-		if(e.getActionCommand() == "Record From Microphone")
-			System.out.println("Not implemented yet");
-	
-	}
-	
-	public class CustomTableCellRenderer extends DefaultTableCellRenderer {
-
-		public Component getTableCellRendererComponent(JTable table,
-        Object value, boolean isSelected,
-        boolean hasFocus, int row, int column) {
-    
-			SongPanel cell = (SongPanel) value;
-			return cell;
+		if(e.getActionCommand() == "Record from Microphone"){
+			audioCapture.setVisible(true);
 		}
+	
 	}
+	
+	/**
+	 * A timer to update all the rows in fileTable
+	 *
+	 */
+	private class TimerListener implements ActionListener{
+	    public void actionPerformed(ActionEvent e){
+	    	songCount = fileTable.getRowCount();
+	    	
+	    	if(songCount > 0){
+	    	
+	    		for(int i = 0; i < songCount; i++){
+	    			songPanel = (SongPanel) fileTable.getModel().getValueAt(i, 0);
+	    			
+	    			if(songPanel.playing = true)
+	    				fileTable.editCellAt(i,0);
+	    		}
+	    	}
+	    }	    
+	 }
+
 	
 }

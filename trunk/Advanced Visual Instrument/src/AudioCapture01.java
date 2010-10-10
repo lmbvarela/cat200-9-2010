@@ -6,8 +6,11 @@ import java.awt.event.*;
 import java.awt.geom.Line2D;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.util.Vector;
 import java.io.*;
+
 import javax.sound.sampled.*;
 import java.awt.font.*;
 import java.text.*;
@@ -17,12 +20,14 @@ import java.text.*;
  * @version 1.11
  * @author Brian Lichtenwalter  
  */
-public class AudioCapture01 extends JPanel implements ActionListener{
+public class AudioCapture01 extends JFrame implements ActionListener{
 
     final int bufSize = 18000;
    
     JButton playBtn, captBtn, pauseBtn,saveBtn;
-    JTextField textField;
+    JFileChooser fileChooser;
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("WAV Files", "wav");
+    //JTextField textField;
     
     FormatControls formatControls = new FormatControls();
     Capture capture = new Capture();
@@ -37,8 +42,10 @@ public class AudioCapture01 extends JPanel implements ActionListener{
     Vector vectorLine = new Vector();
 
     public AudioCapture01() {
+    	super("Advanced Visual Instrument Recorder");
+    	setSize(720,340);
+    	setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-        setBorder(new EmptyBorder(5,5,5,5));
 
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
@@ -59,9 +66,9 @@ public class AudioCapture01 extends JPanel implements ActionListener{
 
         JPanel savePanel = new JPanel();
         JPanel saveFilePanel = new JPanel();
-        saveFilePanel.add(new JLabel("File name:  "));
-        saveFilePanel.add(textField = new JTextField(fileName));
-        textField.setPreferredSize(new Dimension(140,25));
+        //saveFilePanel.add(new JLabel("File name:  "));
+        //saveFilePanel.add(textField = new JTextField(fileName));
+        //textField.setPreferredSize(new Dimension(140,25));
         savePanel.add(saveFilePanel);
 
         JPanel saveButtonPanel = new JPanel();
@@ -71,6 +78,9 @@ public class AudioCapture01 extends JPanel implements ActionListener{
         p2.add(savePanel);
         p1.add(p2);
         add(p1);
+        
+        fileChooser = new JFileChooser(new File("."));
+        fileChooser.setFileFilter(filter);
     }
 
     public void open() { }
@@ -85,8 +95,13 @@ public class AudioCapture01 extends JPanel implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();   
-         if (obj.equals(saveBtn)) 
-            saveToFile(textField.getText().trim(), AudioFileFormat.Type.WAVE);
+         if (obj.equals(saveBtn)){
+        	if(fileChooser.showSaveDialog(getContentPane()) == JFileChooser.APPROVE_OPTION){
+        		String name = fileChooser.getSelectedFile().getName();
+        		saveToFile(name, AudioFileFormat.Type.WAVE);
+        	} 
+         }
+            
          else if (obj.equals(playBtn)) 
          {
             if (playBtn.getText().startsWith("Play")) 
@@ -571,7 +586,7 @@ public class AudioCapture01 extends JPanel implements ActionListener{
                    long milliseconds = (long)(playback.line.getMicrosecondPosition() / 1000);
                     seconds =  milliseconds / 1000.0;
                 } else if ( (capture.line != null) && (capture.line.isActive()) ) {
-                    long milliseconds = (long)(playback.line.getMicrosecondPosition() / 1000);
+                    long milliseconds = (long)(capture.line.getMicrosecondPosition() / 1000);
                     seconds =  milliseconds / 1000.0;
                 }
                 try { thread.sleep(100); } catch (Exception e) { break; }
@@ -588,20 +603,5 @@ public class AudioCapture01 extends JPanel implements ActionListener{
         }
     } // End class SamplingGraph
     
-    public static void main(String s[]) {
-        AudioCapture01 audioCapture = new AudioCapture01();
-        audioCapture.open();
-        JFrame f = new JFrame("Advanced Visual Instrument Recorder ");
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) { System.exit(0); }
-        });
-        f.getContentPane().add("Center", audioCapture);
-        f.pack();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int w = 720;
-        int h = 340;
-        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
-        f.setSize(w, h);
-        f.show();
-    }
+    
     }

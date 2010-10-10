@@ -12,8 +12,10 @@ public class Playback
     // the following three fields hold information about the sound clip
     // currently loaded in this engine
     private Clip currentSoundClip = null;
-    private int currentSoundDuration = 0;
-    private int currentSoundFrameLength = 0;
+    private FloatControl volctrl;
+    private float minVol;
+    private float maxVol;
+    private boolean loaded;
     
     /**
      * Load and play a specified sound file. If the file is not in a
@@ -24,15 +26,19 @@ public class Playback
      * @param soundFile  The file to be loaded.
      * @return  True, if the sound file could be loaded, false otherwise.
      */
-    public boolean play(File soundFile)
+    public boolean load(File soundFile)
     {
-        if(loadSound(soundFile)) {
+    	loaded = loadSound (soundFile);
+    	if (loaded)
+    		return true;
+    	else
+    		return false;
+    }
+    
+    public void play()
+    {
+        if(loaded)
             currentSoundClip.start();
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     /**
@@ -42,8 +48,8 @@ public class Playback
     public void stop()
     {
         if(currentSoundClip != null) {
-            currentSoundClip.stop();
-            currentSoundClip = null;
+        	currentSoundClip.setFramePosition(0);
+        	currentSoundClip.stop();
         }
     }            
 
@@ -58,36 +64,46 @@ public class Playback
         }
     }
 
-    /**
-     * Resume the currently paused sound. If no sound is currently paused,
-     * this method has no effect.
-     */
-    public void resume()
-    {
-        if(currentSoundClip != null) {
-            currentSoundClip.start();
-        }
-    }
 
     /**
-     * Set the current playing position in the currently playing sound to 'value'.
-     * 'value' is a percentage value (0 to 100). If there is no sound currently
-     * playing, this method has no effect.
+     * Get the total duration of the sound
      * 
-     * @param value  The target position in the sound file, as a percentage.
      */
-  
-    
-    
-   
-   
-
-    
     public int getDuration()
     {
-        return currentSoundDuration;
+        return (int) (currentSoundClip.getMicrosecondLength() / 1000000);
     }
 
+    
+    /**
+     * Get the current playing position of the sound
+     * 
+     */
+    public int getCurrentPosition()
+    {
+    	return (int)(currentSoundClip.getFramePosition() / currentSoundClip.getFormat().getFrameRate());
+    }
+    
+    
+    /**
+     * Skip to playing position set by user
+     * @param currentPosition
+     */
+    public void setCurrentPostion(int currentPosition)
+    {
+        currentSoundClip.setMicrosecondPosition(currentPosition * 1000000);
+    }
+    
+    
+    /**
+     * Set the volume
+     * @param newVal
+     */
+    public void setVolume(float newVal){
+    	newVal = (newVal/100.0f) * (maxVol - minVol) + minVol;
+        volctrl.setValue(newVal);
+    }
+    
     /**
      * Load the sound file supplied by the parameter into this sound engine.
      * 
@@ -95,7 +111,6 @@ public class Playback
      */
     private boolean loadSound(File file) 
     {
-        currentSoundDuration = 0;
 
         try {
             AudioInputStream stream = AudioSystem.getAudioInputStream(file);
@@ -124,10 +139,10 @@ public class Playback
 
             currentSoundClip = (Clip) AudioSystem.getLine(info);
             currentSoundClip.open(stream);
-            currentSoundFrameLength = (int) stream.getFrameLength();
-            currentSoundDuration = (int) (currentSoundClip.getBufferSize() / 
-                              (currentSoundClip.getFormat().getFrameSize() * 
-                              currentSoundClip.getFormat().getFrameRate()));
+            volctrl= (FloatControl)currentSoundClip.getControl(FloatControl.Type.MASTER_GAIN); 
+            minVol = volctrl.getMinimum();
+            maxVol = volctrl.getMaximum();
+            
             return true;
         } catch (Exception ex) {
             currentSoundClip = null;

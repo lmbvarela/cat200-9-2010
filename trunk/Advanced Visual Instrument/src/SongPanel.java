@@ -3,21 +3,20 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.Timer;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.PanelUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.net.URL;
 
@@ -52,7 +51,7 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
 	JLabel durationLabel;
 	JPanel toolPanel;
 	JPanel durationPanel;
-
+	boolean playing;
 	
 	/**
 	 * Construct a new SongPanel based on the sound file chosen by user
@@ -132,44 +131,6 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
 
 	}
 	
-	public void actionPerformed (ActionEvent evt){
-		if(evt.getActionCommand() == "Play"){		  
-			player.play();
-			timer.start();
-			playButton.setEnabled(false);		  
-			pauseButton.setEnabled(true);		  
-			stopButton.setEnabled(true);
-		}
-		
-		if(evt.getActionCommand() == "Pause"){
-			player.pause();
-			timer.stop();
-			playButton.setEnabled(true);
-			pauseButton.setEnabled(false);
-			stopButton.setEnabled(true);
-		}
-		
-		if(evt.getActionCommand() == "Stop"){
-			player.stop();
-			timer.restart();
-			playButton.setEnabled(true);
-			pauseButton.setEnabled(false);
-			stopButton.setEnabled(false);
-		}
-	}
-	
-	//TimerListener to fire update event every second
-	private class TimerListener implements ActionListener{
-	    public void actionPerformed(ActionEvent e){
-	    	currentPosition = player.getCurrentPosition();
-	    	currentMin = currentPosition / 60;
-	    	currentSec = currentPosition % 60;
-	    	durationBar.setValue(currentPosition);
-	    	durationLabel.setText(currentMin + ":" + String.format("%02d" , currentSec) + " of " + durationMin + ":" + String.format("%02d" , durationSec));
-	    	}
-	}//end TimerListener
-	
-	
 	//To load sound file and set up the sound progress bar
 	public void initPlayback(File inSoundFile){
 		boolean loaded;
@@ -189,6 +150,61 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
 			player.setVolume(80.0f);
 		}
 	}
+	
+	//To play sound file
+	public void playSound(){
+		player.play();
+		timer.start();
+		playing = true;
+		playButton.setEnabled(false);		  
+		pauseButton.setEnabled(true);		  
+		stopButton.setEnabled(true);
+	}
+	
+	//To pause sound file
+	public void pauseSound(){
+		player.pause();
+		timer.stop();
+		playing = false;
+		playButton.setEnabled(true);
+		pauseButton.setEnabled(false);
+		stopButton.setEnabled(true);
+	}
+	
+	//To stop sound file
+	public void stopSound(){
+		player.stop();
+		timer.restart();
+		playing = false;
+		playButton.setEnabled(true);
+		pauseButton.setEnabled(false);
+		stopButton.setEnabled(false);
+	}
+	
+	
+	public void actionPerformed (ActionEvent evt){
+		if(evt.getActionCommand() == "Play")
+			playSound();
+		
+		if(evt.getActionCommand() == "Pause")
+			pauseSound();
+		
+		if(evt.getActionCommand() == "Stop")
+			stopSound();
+	}
+	
+	//TimerListener to fire update event every second
+	private class TimerListener implements ActionListener{
+	    public void actionPerformed(ActionEvent e){
+	    	currentPosition = player.getCurrentPosition();
+	    	currentMin = currentPosition / 60;
+	    	currentSec = currentPosition % 60;
+	    	durationBar.setValue(currentPosition);
+	    	durationLabel.setText(currentMin + ":" + String.format("%02d" , currentSec) + " of " + durationMin + ":" + String.format("%02d" , durationSec));
+	    	}
+	}//end TimerListener
+	
+	
 	
 	//To update volume and sound progress
 	
