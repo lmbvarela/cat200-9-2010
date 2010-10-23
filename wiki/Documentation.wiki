@@ -27,9 +27,6 @@ Choo Seah Ling
 
 3.      Bobby has recorded his voice in Advanced Visual Instrument before. He wishes to use the voice recorded back to compose a new song.
 
-4.      Catty has composed a song using Advanced Visual Instrument. She has saved it in music note form and wishes to continue composing the song by adding in other instruments.
-
-5.      Mary composed a new sound file with the drum. She wishes to mix the drum file and the guitar file she had made the other day together. The guitar file was saved as audio file.
 
 -------
 
