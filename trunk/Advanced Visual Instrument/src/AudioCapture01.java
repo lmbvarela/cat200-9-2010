@@ -79,6 +79,9 @@ public class AudioCapture01 extends JFrame implements ActionListener{
         p1.add(p2);
         add(p1);   
         
+        fileChooser = new JFileChooser(new File("."));
+        fileChooser.setFileFilter(filter);
+
     }
 
     public void open() { }
