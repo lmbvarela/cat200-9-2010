@@ -191,6 +191,7 @@ public class App_Frame extends JFrame implements ActionListener{
 	    audioCapture = new AudioCapture01();
 	    audioCapture.setVisible(false);
 	    
+	    
 	    setVisible(true); 
 	}
 	
@@ -202,7 +203,7 @@ public class App_Frame extends JFrame implements ActionListener{
 				soundFile = fileChooser.getSelectedFile();
 				songPanel = new SongPanel(soundFile);
 				fileTable.addRow(songPanel);
-				timer.start();
+				timer.start(); //Assume the user play the songs, start the timer to update all the song panels.
 			}
 		}
 		
@@ -275,17 +276,7 @@ public class App_Frame extends JFrame implements ActionListener{
 	 */
 	private class TimerListener implements ActionListener{
 	    public void actionPerformed(ActionEvent e){
-	    	songCount = fileTable.getRowCount();
-	    	
-	    	if(songCount > 0){
-	    	
-	    		for(int i = 0; i < songCount; i++){
-	    			songPanel = (SongPanel) fileTable.getModel().getValueAt(i, 0);
-	    			
-	    			if(songPanel.playing = true)
-	    				fileTable.editCellAt(i,0);
-	    		}
-	    	}
+	    	fileTable.update();
 	    }	    
 	 }
 

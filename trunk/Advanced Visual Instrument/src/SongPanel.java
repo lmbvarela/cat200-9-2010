@@ -6,17 +6,14 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.net.URL;
 
@@ -51,7 +48,6 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
 	JLabel durationLabel;
 	JPanel toolPanel;
 	JPanel durationPanel;
-	boolean playing;
 	
 	/**
 	 * Construct a new SongPanel based on the sound file chosen by user
@@ -155,7 +151,6 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
 	public void playSound(){
 		player.play();
 		timer.start();
-		playing = true;
 		playButton.setEnabled(false);		  
 		pauseButton.setEnabled(true);		  
 		stopButton.setEnabled(true);
@@ -165,7 +160,6 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
 	public void pauseSound(){
 		player.pause();
 		timer.stop();
-		playing = false;
 		playButton.setEnabled(true);
 		pauseButton.setEnabled(false);
 		stopButton.setEnabled(true);
@@ -174,8 +168,7 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
 	//To stop sound file
 	public void stopSound(){
 		player.stop();
-		timer.restart();
-		playing = false;
+		timer.stop();
 		playButton.setEnabled(true);
 		pauseButton.setEnabled(false);
 		stopButton.setEnabled(false);
@@ -197,6 +190,11 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
 	private class TimerListener implements ActionListener{
 	    public void actionPerformed(ActionEvent e){
 	    	currentPosition = player.getCurrentPosition();
+	    	
+	    	//After the song is finished, reset back the song panel as if the song has never been played before
+	    	if(currentPosition == player.getDuration()) 
+	    		stopSound();
+	    	
 	    	currentMin = currentPosition / 60;
 	    	currentSec = currentPosition % 60;
 	    	durationBar.setValue(currentPosition);
@@ -220,9 +218,12 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
         	int desiredPosition = durationBar.getValue();
         	
         	if(desiredPosition != currentPosition){
-        	currentPosition = desiredPosition;
+        	 currentPosition = desiredPosition;
         	 player.setCurrentPostion(currentPosition);
-        	 durationBar.setValue(currentPosition);
+        	 currentMin = currentPosition / 60;
+ 	    	 currentSec = currentPosition % 60;
+ 	    	 durationBar.setValue(currentPosition);
+ 	    	 durationLabel.setText(currentMin + ":" + String.format("%02d" , currentSec) + " of " + durationMin + ":" + String.format("%02d" , durationSec));
         	}
         }
     }
