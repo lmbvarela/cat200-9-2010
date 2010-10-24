@@ -1,3 +1,4 @@
+
 // CAT 200 Group Project
 // Group 9 : Advanced Visual Instruments
 
@@ -24,10 +25,9 @@ public class AudioCapture01 extends JFrame implements ActionListener{
 
     final int bufSize = 18000;
    
-    JButton playBtn, captBtn, pauseBtn,saveBtn;
+    JButton playBtn, captBtn, pauseBtn,saveBtn,exitBtn;
     JFileChooser fileChooser;
     FileNameExtensionFilter filter = new FileNameExtensionFilter("WAV Files", "wav");
-    //JTextField textField;
     
     FormatControls formatControls = new FormatControls();
     Capture capture = new Capture();
@@ -40,6 +40,11 @@ public class AudioCapture01 extends JFrame implements ActionListener{
     double duration, seconds;
     File file;
     Vector vectorLine = new Vector();
+    
+     FloatControl volctrl;
+     float minVol;
+     float maxVol;
+   
 
     public AudioCapture01() {
     	super("Advanced Visual Instrument Recorder");
@@ -63,29 +68,22 @@ public class AudioCapture01 extends JFrame implements ActionListener{
         JPanel samplingPanel = new JPanel(new BorderLayout());
         samplingPanel.add(samplingGraph = new SamplingGraph());
         p2.add(samplingPanel);
-
+    
         JPanel savePanel = new JPanel();
-        JPanel saveFilePanel = new JPanel();
-        //saveFilePanel.add(new JLabel("File name:  "));
-        //saveFilePanel.add(textField = new JTextField(fileName));
-        //textField.setPreferredSize(new Dimension(140,25));
-        savePanel.add(saveFilePanel);
-
         JPanel saveButtonPanel = new JPanel();
         saveBtn = addButton("Save", saveButtonPanel, false);
+        exitBtn = addButton("Cancel",saveButtonPanel,false);
         savePanel.add(saveButtonPanel);
 
         p2.add(savePanel);
         p1.add(p2);
-        add(p1);
+        add(p1);   
         
-        fileChooser = new JFileChooser(new File("."));
-        fileChooser.setFileFilter(filter);
     }
 
     public void open() { }
  
-    private JButton addButton(String name, JPanel p, boolean state) {
+   private JButton addButton(String name, JPanel p, boolean state) {
         JButton button = new JButton(name);
         button.addActionListener(this);
         button.setEnabled(state);
@@ -110,6 +108,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
                 samplingGraph.start();
                 captBtn.setEnabled(false);
                 pauseBtn.setEnabled(true);
+                exitBtn.setEnabled(true);
                 playBtn.setText("Stop");
              }
             else {
@@ -117,6 +116,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
                 samplingGraph.stop();
                 captBtn.setEnabled(false);
                 pauseBtn.setEnabled(false);
+                exitBtn.setEnabled(true);
                 playBtn.setText("Play");
                   }     
          } 
@@ -128,7 +128,8 @@ public class AudioCapture01 extends JFrame implements ActionListener{
                 fileName = "Untitled";
                 samplingGraph.start();         
                 playBtn.setEnabled(false);
-                pauseBtn.setEnabled(true);           
+                pauseBtn.setEnabled(true); 
+                exitBtn.setEnabled(true);
                 saveBtn.setEnabled(false);
                 captBtn.setText("Stop");
               } 
@@ -140,9 +141,9 @@ public class AudioCapture01 extends JFrame implements ActionListener{
                 playBtn.setEnabled(true);
                 pauseBtn.setEnabled(false);     
                 saveBtn.setEnabled(true);
+                exitBtn.setEnabled(true);
                 captBtn.setText("Capture");
                  }
-           
         } 
          else if (obj.equals(pauseBtn))
            {
@@ -167,7 +168,13 @@ public class AudioCapture01 extends JFrame implements ActionListener{
                 }
                 pauseBtn.setText("Pause");
             }     
-        }        
+        }     
+        
+         else if(obj.equals(exitBtn))
+         {
+        	setVisible(false);
+         }
+       
     }
 
     public void createAudioInputStream(File file,boolean updateComponents) {
@@ -177,7 +184,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
                 audioInputStream = AudioSystem.getAudioInputStream(file);
                 playBtn.setEnabled(true);
                 fileName = file.getName();
-            long milliseconds = (long)((audioInputStream.getFrameLength() *1000) / audioInputStream.getFormat().getFrameRate());
+            long milliseconds = (long)((audioInputStream.getFrameLength() *1000.0) / audioInputStream.getFormat().getFrameRate());
                 saveBtn.setEnabled(true);
                 if (updateComponents) {
                 	audioInputStream.getFormat();
@@ -191,7 +198,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
         }
     }
 
-    public void saveToFile(String name, AudioFileFormat.Type fileType) {
+   public void saveToFile(String name, AudioFileFormat.Type fileType) {
         if (audioInputStream == null) {
             reportStatus("No audio to save");
             return;
@@ -235,7 +242,12 @@ public class AudioCapture01 extends JFrame implements ActionListener{
             thread.setName("Playback");
             thread.start();
         }
-
+        //-------------------
+        public void setVolume(float newVal){
+        	newVal = (newVal/100.0f) * (maxVol - minVol) + minVol;
+            volctrl.setValue(newVal);
+        }
+        //-------------------------
         public void stop() {
             thread = null;
         }
@@ -269,6 +281,8 @@ public class AudioCapture01 extends JFrame implements ActionListener{
             // get an AudioInputStream of the desired format for playback
             AudioFormat format = formatControls.getFormat();
             AudioInputStream playbackInputStream = AudioSystem.getAudioInputStream(format, audioInputStream);
+            
+          
                         
             if (playbackInputStream == null) {
                 shutDown("Unable to convert stream of format " + audioInputStream + " to format " + format);
@@ -286,6 +300,12 @@ public class AudioCapture01 extends JFrame implements ActionListener{
             try {
                 line = (SourceDataLine) AudioSystem.getLine(info);
                 line.open(format, bufSize);
+                //--------------
+                volctrl= (FloatControl)line.getControl(FloatControl.Type.MASTER_GAIN); 
+                minVol = volctrl.getMinimum();
+                maxVol = volctrl.getMaximum();
+                
+                //-----------------
             } catch (LineUnavailableException ex) { 
                 shutDown("Unable to open the line: " + ex);
                 return;
@@ -338,6 +358,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
             thread.setName("Capture");
             thread.start();
         }
+
         public void stop() {
             thread = null;
         }    
@@ -374,6 +395,8 @@ public class AudioCapture01 extends JFrame implements ActionListener{
             try {
                 line = (TargetDataLine) AudioSystem.getLine(info);
                 line.open(format, line.getBufferSize());
+             
+                
             } catch (LineUnavailableException ex) { 
                 shutDown("Unable to open the line: " + ex);
                 return;
@@ -384,7 +407,6 @@ public class AudioCapture01 extends JFrame implements ActionListener{
                 shutDown(ex.toString());
                 return;
             }
-
             // play back the captured audio data
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             int frameSizeInBytes = format.getFrameSize();
@@ -417,10 +439,10 @@ public class AudioCapture01 extends JFrame implements ActionListener{
             byte audioBytes[] = out.toByteArray();
             ByteArrayInputStream bais = new ByteArrayInputStream(audioBytes);
             audioInputStream = new AudioInputStream(bais, format, audioBytes.length / frameSizeInBytes);
-            long milliseconds = (long)((audioInputStream.getFrameLength() * 1000) / format.getFrameRate());
+            long milliseconds = (long)((audioInputStream.getFrameLength() * 1000.0) / format.getFrameRate());
             duration = milliseconds / 1000.0;
             try {
-                audioInputStream.reset();
+               
             } catch (Exception ex) { 
                 ex.printStackTrace(); 
                 return;
@@ -438,9 +460,9 @@ public class AudioCapture01 extends JFrame implements ActionListener{
 
         public AudioFormat getFormat() {
             Vector v = new Vector(groups.size());    
-            float rate = 8000;
+            float rate =8000;
+            //----------------16/////
             int sampleSize = 16;
-            boolean signedString = true;
             boolean bigEndian = true;
             int channels = 1;
             AudioFormat.Encoding encoding = AudioFormat.Encoding.PCM_SIGNED;
@@ -476,20 +498,20 @@ public class AudioCapture01 extends JFrame implements ActionListener{
                     reportStatus(ex.toString());
                     return; 
                 }
-            }
+            }  
             Dimension d = getSize();
             int w = d.width;
             int h = d.height-15;
             int[] audioData = null;
             if (format.getSampleSizeInBits() == 16) {
-                 int nlengthInSamples = audioBytes.length / 2;
+                 int nlengthInSamples = audioBytes.length/2 ;
                  audioData = new int[nlengthInSamples];
                  if (format.isBigEndian()) {
                     for (int i = 0; i < nlengthInSamples; i++) {
                          /* First byte is MSB (high order) */
-                         int MSB = (int) audioBytes[2*i];
+                         int MSB = (int) audioBytes[2*i+1];
                          /* Second byte is LSB (low order) */
-                         int LSB = (int) audioBytes[2*i+1];
+                         int LSB = (int) audioBytes[2*i];
                          audioData[i] = MSB << 8 | (255 & LSB);
                      }
                  } 
@@ -510,6 +532,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
                 y_last = y_new;
             }
             repaint();
+
         }
         public void paint(Graphics g) {
             Dimension d = getSize();
@@ -583,13 +606,13 @@ public class AudioCapture01 extends JFrame implements ActionListener{
             seconds = 0;
             while (thread != null) {
                 if ((playback.line != null) && (playback.line.isOpen()) ) {
-                   long milliseconds = (long)(playback.line.getMicrosecondPosition() / 1000);
+                   long milliseconds = (long)(playback.line.getMicrosecondPosition() / 1000.0);
                     seconds =  milliseconds / 1000.0;
                 } else if ( (capture.line != null) && (capture.line.isActive()) ) {
-                    long milliseconds = (long)(capture.line.getMicrosecondPosition() / 1000);
+                    long milliseconds = (long)(capture.line.getMicrosecondPosition() / 1000.0);
                     seconds =  milliseconds / 1000.0;
                 }
-                try { thread.sleep(100); } catch (Exception e) { break; }
+                try { thread.sleep(70); } catch (Exception e) { break; }
 
                 repaint();                               
                 while ((capture.line != null && !capture.line.isActive()) ||
