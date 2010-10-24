@@ -4,13 +4,11 @@
  * Song Table implements SongTableEditor  
 */
 
-import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.AbstractCellEditor;
 import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
@@ -61,7 +59,8 @@ public class SongTable extends JTable{
 	 */
 	 
 	 public TableCellEditor getCellEditor(final int row, final int column) {
-	        TableColumn tableColumn = getColumnModel().getColumn(column);
+		  
+		 TableColumn tableColumn = getColumnModel().getColumn(column);
 	        TableCellEditor editor = tableColumn.getCellEditor();
 	        if (editor == null) {
 	            Class c = getColumnClass(column);
@@ -74,7 +73,8 @@ public class SongTable extends JTable{
 	            editor = getDefaultEditor(c);
 	        }
 	        return editor;
-	    }
+	        
+	 }
 	
 	 
 	/**
@@ -122,6 +122,17 @@ public class SongTable extends JTable{
 		model.removeRow(rowIndex);
 	}
 	
+	/**
+	 * Update the interface of every song panels contained in the Song Table
+	 */
+	public void update(){
+		DefaultTableModel model = (DefaultTableModel) getModel();
+		for(int i = 0; i < getRowCount(); i++){
+			if(getEditingRow() != i)
+				model.fireTableCellUpdated(i, 0);
+		}
+	}
+	
 	
 	/**
 	 * SongTableRenderer that is used to draw SongPanel
@@ -130,16 +141,10 @@ public class SongTable extends JTable{
 		
 		public SongPanel getTableCellRendererComponent(JTable table, Object value, 
 				boolean isSelected, boolean isFocused, int row, int column){
-			
 			if(value == null)
 				return null;
 			
 			SongPanel song = (SongPanel) value;
-			
-			if(isSelected)
-				song.setBorder(new LineBorder(Color.black, 2));
-			else
-				song.setBorder(new EtchedBorder(EtchedBorder.RAISED));
 			
 			return song;
 		}
@@ -160,7 +165,7 @@ public class SongTable extends JTable{
 		@Override
 		public Component getTableCellEditorComponent(JTable table,
 				Object value, boolean isSelected, int row, int column) {
-			
+			//System.out.println("Come into editor");
 			if(value == null)
 				return null;
 			
@@ -168,4 +173,5 @@ public class SongTable extends JTable{
 			return song;
 		}	
 	}
+
 }
