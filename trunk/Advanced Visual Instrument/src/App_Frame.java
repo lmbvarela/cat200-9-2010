@@ -1,4 +1,5 @@
 /** CAT 200 Group Project
+ *  Advanced Visual Instruments
  *  Main Application frame
  *  Prerequisite : 
  *  In src file:

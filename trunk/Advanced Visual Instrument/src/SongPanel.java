@@ -169,6 +169,11 @@ public class SongPanel extends JPanel implements ActionListener, ChangeListener{
 	public void stopSound(){
 		player.stop();
 		timer.stop();
+		currentPosition = player.getCurrentPosition();
+		currentMin = currentPosition / 60;
+    	currentSec = currentPosition % 60;
+    	durationBar.setValue(currentPosition);
+    	durationLabel.setText(currentMin + ":" + String.format("%02d" , currentSec) + " of " + durationMin + ":" + String.format("%02d" , durationSec));
 		playButton.setEnabled(true);
 		pauseButton.setEnabled(false);
 		stopButton.setEnabled(false);
