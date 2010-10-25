@@ -41,11 +41,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
     File file;
     Vector vectorLine = new Vector();
     
-     FloatControl volctrl;
-     float minVol;
-     float maxVol;
    
-
     public AudioCapture01() {
     	super("Advanced Visual Instrument Recorder");
     	setSize(720,340);
@@ -245,12 +241,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
             thread.setName("Playback");
             thread.start();
         }
-        //-------------------
-        public void setVolume(float newVal){
-        	newVal = (newVal/100.0f) * (maxVol - minVol) + minVol;
-            volctrl.setValue(newVal);
-        }
-        //-------------------------
+
         public void stop() {
             thread = null;
         }
@@ -303,12 +294,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
             try {
                 line = (SourceDataLine) AudioSystem.getLine(info);
                 line.open(format, bufSize);
-                //--------------
-                volctrl= (FloatControl)line.getControl(FloatControl.Type.MASTER_GAIN); 
-                minVol = volctrl.getMinimum();
-                maxVol = volctrl.getMaximum();
                 
-                //-----------------
             } catch (LineUnavailableException ex) { 
                 shutDown("Unable to open the line: " + ex);
                 return;
@@ -387,7 +373,6 @@ public class AudioCapture01 extends JFrame implements ActionListener{
 
             AudioFormat format = formatControls.getFormat();
             DataLine.Info info = new DataLine.Info(TargetDataLine.class,format);
-                   
             if (!AudioSystem.isLineSupported(info)) {
                 shutDown("Line matching " + info + " not supported.");
                 return;
@@ -464,7 +449,7 @@ public class AudioCapture01 extends JFrame implements ActionListener{
         public AudioFormat getFormat() {
             Vector v = new Vector(groups.size());    
             float rate =8000;
-            //----------------16/////
+       
             int sampleSize = 16;
             boolean bigEndian = true;
             int channels = 1;
