@@ -15,7 +15,16 @@ This is a page that will act as our group’s project logbook. The progress of t
 ||                     || Recording module code submitted to Google Code||
 ||13th September 2010  || Wiki Page created in Google Code ||
 ||18th September 2010  || Instrument module (implemented in Piano.java) submitted to Google Code||
-||29th October 2010    || Project Demonstration ||
+||23rd September 2010  || All members' GUI idea updated in Documentation page ||
+||2nd October 2010     || GUI module updated (Keyboard features added) to Google Code ||
+||5th October 2010     || Playback module updated (Resume, play and stop function added) to Google Code ||
+||8th October 2010     || GUI module updated (GUI to handle multiple audio files added) to Google Code ||
+||                     || Recording module updated (Sampling graph added) to Google Code ||
+||10th October 2010    || GUI module updated (App_Frame linked to Playback and Recording module) to Google Code ||
+||14th October 2010    || Instrument module updated (Pitch shift function added) to Google Code || 
+||21st October 2010    || Project enter Final Phase (Testing and debugging) ||
+||                     || Confirmation of project demonstration date ||
+||25th October 2010    || Project Demonstration ||
 
 
 -------
@@ -140,3 +149,28 @@ Agendas	:
  * The GUI designs submitted by all members have been discussed. Different design features from all designs has been combined.
  * Pitch issue has been brought up by Khoo. The algorithm needed to change the pitch of a new sound recorded is not clear. (Issue solved by referring to online materials)
  * All members are reminded to follow the Gannt Chart.
+
+===Meeting 9===
+Date            :14th October 2010
+
+Time            :2.00 p.m.-2.30 p.m.
+
+Present         :Choo Seah Ling,Khoo Ka Thoong,Lim Yeong Chuin
+
+Absent          :Wong Seok Yee
+
+Agendas:
+* Pitch issue has been brought up by Khoo again.Khoo unable to solve the noise in pitch shifting.The previous algorithm can change the pitch of an audio but somehow have noise in the output. (Issue solved by replaced the algorithm with another one which is less noise(almost none).
+* Discuss the date and time for java presentation.
+
+===Meeting 10===
+DATE            :21st October 2010
+Time            :2.00 p.m.-2.30 p.m.
+Attendance      :All members
+Agendas:
+* The date and time for CAT200 presentation has been informed by Khoo.
+* Date :25th October 2010
+  Time :11.00 a.m. 
+  Venue: waiting information from lecturer
+* Project enter last phase
+   
