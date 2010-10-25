@@ -53,6 +53,7 @@ public class PitchPiano extends JFrame implements ActionListener{
         static byte[] dataSound;
         double[][] outdata;
         InputStream in;
+        SourceDataLine sourceDataLine;
     	static AudioFormat audioFormat;
     	static int numberOfSample;
     	static double pitchShift;
@@ -61,7 +62,7 @@ public class PitchPiano extends JFrame implements ActionListener{
     	static PitchShift shifter = new PitchShift(16000);
 
   public PitchPiano(){
-    setTitle("Virtual Piano");
+    setTitle("Pitch Piano");
     setSize(new Dimension(350,250));
     setLocationRelativeTo(null);
     setResizable(false);
@@ -332,7 +333,6 @@ public class PitchPiano extends JFrame implements ActionListener{
     private void play(byte[] s) throws IOException {
       	in = new ByteArrayInputStream(s);
       	DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
-  		SourceDataLine sourceDataLine;
   		try {
   			sourceDataLine = (SourceDataLine)AudioSystem.getLine(
   			        dataLineInfo);
@@ -402,24 +402,16 @@ public class PitchPiano extends JFrame implements ActionListener{
   
   public void mouseReleased(MouseEvent evt){
           if (opt == true){
-          try {
-        	if(in!=null)
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        if (sourceDataLine!=null)
+		sourceDataLine.stop();
           repaint ();
           }  
   }
   
   public void mouseEntered(MouseEvent evt) {}
   public void mouseExited(MouseEvent evt) {
-              try {
-            	if (in!=null)
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	  if(sourceDataLine!=null)
+	  sourceDataLine.stop();
   } 
   public void mouseClicked(MouseEvent evt){}
   
@@ -491,7 +483,7 @@ public class PitchPiano extends JFrame implements ActionListener{
 
 public void keyReleased(KeyEvent evt) {
         prevKey = evt.getWhen();  //Prevent auto-repeat key for keyPressed
-        
+
         if(released == false)  //Prevent auto-repeat key for keyReleased
         timer.restart();
 }
@@ -503,12 +495,8 @@ private class TimerListener implements ActionListener{
     public void actionPerformed(ActionEvent e){
         released = true;
         timer.stop();
-        try {
-        	if(in!=null)
-			in.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+        if (sourceDataLine!=null)
+        sourceDataLine.stop();
         repaint();
     }
 }//end TimerListener
