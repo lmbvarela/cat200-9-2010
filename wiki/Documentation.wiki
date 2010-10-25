@@ -32,40 +32,35 @@ Choo Seah Ling
 
 = Use Case Diagram =
 Project overview.
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/CStDWSVbLcMLBA3kts5Pkw?feat=embedwebsite"><img src="http://lh3.ggpht.com/_jnNNAl2ZuXg/TML7qqUWkMI/AAAAAAAAABo/JUrZ6pw62jY/s144/userCase.jpg" height="88" width="144" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
+http://lh3.ggpht.com/_jnNNAl2ZuXg/TML7qqUWkMI/AAAAAAAAABo/JUrZ6pw62jY/s800/userCase.jpg
 
 -------
 
 = Sequence Diagram =
-=== Use Case 1 ===
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/cMinmV8nJlFYPFwjYXMj7w?feat=embedwebsite"><img src="http://lh5.ggpht.com/_jnNNAl2ZuXg/TMMUtqDXO1I/AAAAAAAAABw/8I918LW3XYI/s144/1.jpeg" height="144" width="112" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
 
+=== Use Case 1 ===
+http://lh5.ggpht.com/_jnNNAl2ZuXg/TMMUtqDXO1I/AAAAAAAAABw/8I918LW3XYI/s800/1.jpeg
 
 === Use Case 2 ===
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/_3pThuYnkUs0jV94UhLy_Q?feat=embedwebsite"><img src="http://lh3.ggpht.com/_jnNNAl2ZuXg/TMMUt8wASVI/AAAAAAAAAB0/TfBN9V_GNFw/s144/2.jpeg" height="144" width="103" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
-
+http://lh3.ggpht.com/_jnNNAl2ZuXg/TMMUt8wASVI/AAAAAAAAAB0/TfBN9V_GNFw/s800/2.jpeg
 
 === Use Case 3 ===
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/3AwZYtoa2MhgMlVUmnbvqg?feat=embedwebsite"><img src="http://lh3.ggpht.com/_jnNNAl2ZuXg/TMMUt46MVEI/AAAAAAAAAB4/1jFM5ZiXDqA/s144/3.jpeg" height="144" width="115" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
-
-
-
+http://lh3.ggpht.com/_jnNNAl2ZuXg/TMMUt46MVEI/AAAAAAAAAB4/1jFM5ZiXDqA/s800/3.jpeg
 
 
 ------
 = UML Class Diagram =
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/roTDD-uVcUCIn-DasBrAiA?feat=embedwebsite"><img src="http://lh6.ggpht.com/_jnNNAl2ZuXg/TMTajcS8i1I/AAAAAAAAACM/bRTJQ_XJnFo/s800/App_Frame.PNG" height="428" width="800" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
+http://lh6.ggpht.com/_jnNNAl2ZuXg/TMTajcS8i1I/AAAAAAAAACM/bRTJQ_XJnFo/s800/App_Frame.PNG
 
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/3I_ClnXmx27D0Iesc7Iljw?feat=embedwebsite"><img src="http://lh3.ggpht.com/_jnNNAl2ZuXg/TMTajZ89dSI/AAAAAAAAACQ/c5USmmKcgqY/s800/AudioCapture.PNG" height="570" width="797" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
+http://lh3.ggpht.com/_jnNNAl2ZuXg/TMTajZ89dSI/AAAAAAAAACQ/c5USmmKcgqY/s800/AudioCapture.PNG
 
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/vG4ZiM_4ByXU89BgpCxP8A?feat=embedwebsite"><img src="http://lh3.ggpht.com/_jnNNAl2ZuXg/TMTajkisKqI/AAAAAAAAACU/Dw1h9Ie6ghc/s800/Piano.PNG" height="457" width="754" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
+http://lh3.ggpht.com/_jnNNAl2ZuXg/TMTajkisKqI/AAAAAAAAACU/Dw1h9Ie6ghc/s800/Piano.PNG
 
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/yCstkPJzblzXlNCzlqI-XQ?feat=embedwebsite"><img src="http://lh6.ggpht.com/_jnNNAl2ZuXg/TMTaj-8WATI/AAAAAAAAACY/xiJyyZVBDE4/s800/PitchPiano.PNG" height="603" width="586" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
+http://lh6.ggpht.com/_jnNNAl2ZuXg/TMTaj-8WATI/AAAAAAAAACY/xiJyyZVBDE4/s800/PitchPiano.PNG
 
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/nY1uC7WHCXbOCyT277qkXQ?feat=embedwebsite"><img src="http://lh6.ggpht.com/_jnNNAl2ZuXg/TMTakasQpPI/AAAAAAAAACc/i_XtiG2T5h8/s800/SongPanel.PNG" height="585" width="652" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
+http://lh6.ggpht.com/_jnNNAl2ZuXg/TMTakasQpPI/AAAAAAAAACc/i_XtiG2T5h8/s800/SongPanel.PNG
 
-<table style="width:auto;"><tr><td><a href="http://picasaweb.google.com/lh/photo/xq7hrvJ_2wOFqMT2ff42qg?feat=embedwebsite"><img src="http://lh3.ggpht.com/_jnNNAl2ZuXg/TMTav4tLjiI/AAAAAAAAACg/nl3r43WPgcw/s800/SongTable.PNG" height="487" width="798" /></a></td></tr><tr><td style="font-family:arial,sans-serif; font-size:11px; text-align:right">From <a href="http://picasaweb.google.com/yeongchuin17/CAT200?feat=embedwebsite">CAT200</a></td></tr></table>
-
+http://lh3.ggpht.com/_jnNNAl2ZuXg/TMTav4tLjiI/AAAAAAAAACg/nl3r43WPgcw/s800/SongTable.PNG
 
 -------
 = Proposed User Interfaces =
