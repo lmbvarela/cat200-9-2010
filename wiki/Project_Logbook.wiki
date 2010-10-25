@@ -146,11 +146,16 @@ Time		: 2.00 p.m. – 2.30 p.m.
 Attendance	: All members
 
 Agendas	:
+
  * The GUI designs submitted by all members have been discussed. Different design features from all designs has been combined.
+
  * Pitch issue has been brought up by Khoo. The algorithm needed to change the pitch of a new sound recorded is not clear. (Issue solved by referring to online materials)
+
+
  * All members are reminded to follow the Gannt Chart.
 
 ===Meeting 9===
+
 Date            :14th October 2010
 
 Time            :2.00 p.m.-2.30 p.m.
@@ -160,14 +165,21 @@ Present         :Choo Seah Ling,Khoo Ka Thoong,Lim Yeong Chuin
 Absent          :Wong Seok Yee
 
 Agendas:
-* Pitch issue has been brought up by Khoo again.Khoo unable to solve the noise in pitch shifting.The previous algorithm can change the pitch of an audio but somehow have noise in the output. (Issue solved by replaced the algorithm with another one which is less noise(almost none).
+
+* Pitch issue has been brought up by Khoo again. Khoo unable to solve the noise in pitch shifting.The previous algorithm can change the pitch of an audio but somehow have noise in the output. (Issue solved by replaced the algorithm with another one which is less noise(almost none).
+
 * Discuss the date and time for java presentation.
 
 ===Meeting 10===
+
 DATE            :21st October 2010
+
 Time            :2.00 p.m.-2.30 p.m.
+
 Attendance      :All members
+
 Agendas:
+
 * The date and time for CAT200 presentation has been informed by Khoo.
 * Date :25th October 2010
   Time :11.00 a.m. 
