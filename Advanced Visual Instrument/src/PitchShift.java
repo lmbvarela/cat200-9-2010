@@ -26,7 +26,7 @@ import java.util.Arrays;
  * Class for doing pitch shifting while maintaining duration using the Short Time Fourier Transform.
  *
  * @author Stephan M. Bernsee (original cpp version 1.2 smbPitchShift.cpp, see <a href="http://www.dspguru.com">http://www.dspguru.com/wol.htm</a>)
- * @author Steffen Weissmann (java port)
+ * @author Steffen Weissmann (java port) http://www3.math.tu-berlin.de/jreality/
  */
 public class PitchShift {
 
