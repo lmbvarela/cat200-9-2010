@@ -1,0 +1,3 @@
+Ever imagined to play a piano tune on a computer? Or recording your own voices and play a melody with it? This is what our group project all about – a musical instrument simulator. With Advanced Visual Instrument, one can save all the troubles to buy and keep the instruments. One can even compose songs in anywhere and anytime!
+
+The idea of this project comes from a Korean variety show. A group of musician has composed a song using an artist’s voice that their piano has recorded on the spot. This has inspired us and we have decided to come out with this project to share the joy of music.
